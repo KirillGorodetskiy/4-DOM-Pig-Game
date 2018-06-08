@@ -9,7 +9,7 @@ GAME RULES:
 
 */
 
-var scores, roundScore, activePlayer, gamePlaying, prevDice;
+var scores, roundScore, activePlayer, gamePlaying, prevDice, gameGoal;
 
 init();
 
@@ -46,7 +46,7 @@ document.querySelector('.btn-hold').addEventListener('click', function() {
 		//2. Update the UI
 		document.querySelector('#score-' + activePlayer).textContent = scores[activePlayer];
 		//3. Check if player won the game
-		if(scores[activePlayer] >= 1000) {
+		if(scores[activePlayer] >= gameGoal) {
 			document.getElementById('name-' + activePlayer).textContent = 'Winner!!!';
 			document.querySelector('.dice').style.display = 'none';
 			document.querySelector('.player-' + activePlayer + '-panel').classList.add('winner');
@@ -59,6 +59,12 @@ document.querySelector('.btn-hold').addEventListener('click', function() {
 	}
 		
 });
+
+document.querySelector('.btn-set').addEventListener('click', function() {
+	gameGoal = document.getElementById('in-1').value;
+	document.getElementById('game-g').textContent = 'Game goal is ' + gameGoal;
+});
+
 
 document.querySelector('.btn-new').addEventListener('click', init);
 
@@ -76,6 +82,7 @@ function nextPlayer() {
 }
 
 function init() {
+	gameGoal = 100;
 	scores = [0,0];
 	activePlayer = 0;
 	roundScore = 0;
@@ -89,6 +96,7 @@ function init() {
 	document.getElementById('current-1').textContent = '0';
 	document.getElementById('name-0').textContent = 'Player 1';
 	document.getElementById('name-1').textContent = 'Player 2';
+	document.getElementById('game-g').textContent = 'Game goal is ' + gameGoal;
 	
 	document.querySelector('.player-0-panel').classList.remove('winner');
 	document.querySelector('.player-1-panel').classList.remove('winner');
